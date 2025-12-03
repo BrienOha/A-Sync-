@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <div class="profile-card">
+        <img id="profilePic" class="profile-img" alt="Profile Picture">
+        <h2 id="profileName"></h2>
+        <p id="profileEmail"></p>
+
+        <a href="/logout">
+            <button class="logout-btn">Logout</button>
+        </a>
+    </div>
+
+</div>
+
+<script>
+    // Load user data sent from Express session via query params
+    const params = new URLSearchParams(window.location.search);
+
+    document.getElementById("profilePic").src = params.get("picture");
+    document.getElementById("profileName").textContent = params.get("name");
+    document.getElementById("profileEmail").textContent = params.get("email");
+</script>
+
+</body>
+</html>
