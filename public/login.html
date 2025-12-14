@@ -3,33 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - A-SYNC</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Main CSS -->
     <link rel="stylesheet" href="./css/styles.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
+<body class="login-layout">
 
-<div class="container">
-    <h2>Welcome Back</h2>
+    <!-- Toast Container for Notifications -->
+    <div id="toast-container"></div>
 
-    <form method="POST" action="/manual-login">
-        <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Log in</button>
-    </form>
+    <div class="login-card">
+        <!-- Logo Icon -->
+        <div class="logo-circle">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        
+        <!-- Header Text -->
+        <h2 style="font-weight: 800; font-size: 1.5rem; margin-bottom: 0.5rem; color: var(--text-main);">A-SYNC</h2>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem;">School Asynchronous DTR System</p>
 
-    <div class="divider">
-        <div class="divider-line"></div>
-        <div class="divider-text">OR</div>
-        <div class="divider-line"></div>
+        <!-- Login Form -->
+        <form action="/manual-login" method="POST">
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" name="email" placeholder="e.g. admin@school.edu" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            
+            <div style="text-align: right; margin-bottom: 1.5rem;">
+                <!-- Password Reset Trigger -->
+                <a href="#" onclick="forgotPassword(event)" style="font-size: 0.85rem; color: var(--primary); text-decoration: none; font-weight: 600;">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                Sign In <i class="fas fa-arrow-right" style="font-size: 0.8rem;"></i>
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider" style="margin-top: 10px; margin-bottom: 10px;">
+            <span>Or continue with</span>
+        </div>
+
+        <!-- Google Login Button -->
+        <a href="/auth/google" class="google-btn">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+            Sign in with Google
+        </a>
+
+        <!-- Test Credentials Helper (Remove this in production) -->
+        <div style="margin-top: 2rem; padding: 1rem; background: #f9fafb; border: 1px solid var(--border-color); border-radius: 0.5rem; text-align: left; font-size: 0.8rem; color: var(--text-muted);">
+            <p style="margin-bottom: 5px; color: var(--text-main);"><strong><i class="fas fa-info-circle"></i> Test Credentials:</strong></p>
+            <div style="margin-bottom: 2px;">Admin: <code>admin@school.edu</code> / <code>admin123</code></div>
+            <div style="margin-bottom: 2px;">Head: <code>head@school.edu</code> / <code>head123</code></div>
+            <div>Teacher: <code>teacher@school.edu</code> / (any)</div>
+        </div>
     </div>
 
-    <a href="/auth/google">
-        <button class="google-btn">
-            <img width="48" height="48" src="https://img.icons8.com/fluency/48/google-logo.png" alt="google-logo"/>
-            Sign in with Google
-        </button>
-    </a>
-</div>
+    <!-- Script for interactive elements -->
+    <script>
+        function forgotPassword(e) {
+            e.preventDefault(); // Prevent link from jumping
+            
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast toast-success';
+            
+            // Add icon and message
+            toast.innerHTML = `
+                <i class="fas fa-paper-plane"></i> 
+                <span>Reset link sent to your email!</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s reverse forwards';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
 
 </body>
 </html>
