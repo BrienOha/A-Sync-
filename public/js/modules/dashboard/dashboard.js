@@ -340,5 +340,132 @@ function formatTime(timeStr) {
     return `${h12}:${minute} ${ampm}`;
 }
 
+// --- 7. USER MANAGEMENT MODULE ---
+
+// Mock User Database (Initial state if empty)
+let usersDb = JSON.parse(localStorage.getItem('usersData')) || [
+    { id: 1, name: "Dr. Jane Smith", email: "jane.smith@school.edu", role: "Head", dept: "Science", picture: "" },
+    { id: 2, name: "Mark Wilson", email: "m.wilson@school.edu", role: "Teacher", dept: "Mathematics", picture: "" },
+    { id: 3, name: "Admin User", email: "admin@school.edu", role: "Admin", dept: "IT Office", picture: "" }
+];
+
+function renderUsers() {
+    const userTable = document.getElementById('userTableBody');
+    if (!userTable) return;
+    userTable.innerHTML = "";
+
+    usersDb.forEach(u => {
+        userTable.innerHTML += `
+            <tr>
+                <td>
+                    <div class="flex items-center gap-2">
+                        <img src="${u.picture || `https://ui-avatars.com/api/?name=${u.name}`}" style="width:32px;height:32px;border-radius:50%">
+                        <div><b>${u.name}</b><br><small style="color:var(--text-muted)">${u.email}</small></div>
+                    </div>
+                </td>
+                <td>
+                    <select onchange="updateUserField(${u.id}, 'dept', this.value)" class="form-select-sm">
+                        <option value="Science" ${u.dept === 'Science' ? 'selected' : ''}>Science</option>
+                        <option value="Mathematics" ${u.dept === 'Mathematics' ? 'selected' : ''}>Mathematics</option>
+                        <option value="English" ${u.dept === 'English' ? 'selected' : ''}>English</option>
+                        <option value="IT Office" ${u.dept === 'IT Office' ? 'selected' : ''}>IT Office</option>
+                    </select>
+                </td>
+                <td>
+                    <select onchange="updateUserField(${u.id}, 'role', this.value)" class="form-select-sm" style="font-weight:600">
+                        <option value="Teacher" ${u.role === 'Teacher' ? 'selected' : ''}>Teacher</option>
+                        <option value="Head" ${u.role === 'Head' ? 'selected' : ''}>Head</option>
+                        <option value="Admin" ${u.role === 'Admin' ? 'selected' : ''}>Admin</option>
+                    </select>
+                </td>
+                <td class="text-center">
+                    <button onclick="resetPassword('${u.email}')" class="btn-icon" title="Reset Password" style="color: var(--primary)">
+                        <i class="fas fa-key"></i>
+                    </button>
+                    <button onclick="deleteUser(${u.id})" class="btn-icon" title="Delete User" style="color: #ef4444">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+function updateUserField(id, field, value) {
+    const index = usersDb.findIndex(u => u.id === id);
+    if (index !== -1) {
+        usersDb[index][field] = value;
+        localStorage.setItem('usersData', JSON.stringify(usersDb));
+        showToast(`Updated ${field} for ${usersDb[index].name}`, "success");
+    }
+}
+
+function resetPassword(email) {
+    // In a real Supabase app, you would call: 
+    // await supabase.auth.resetPasswordForEmail(email)
+    showToast(`Password reset link sent to ${email}`, "success");
+}
+
+function deleteUser(id) {
+    if(confirm("Are you sure you want to remove this user?")) {
+        usersDb = usersDb.filter(u => u.id !== id);
+        localStorage.setItem('usersData', JSON.stringify(usersDb));
+        renderUsers();
+        showToast("User removed", "error");
+    }
+}
+
+// --- USER MODAL LOGIC ---
+
+function addUserPrompt() {
+    document.getElementById('userModal').style.display = 'flex';
+}
+
+function closeUserModal() {
+    document.getElementById('userModal').style.display = 'none';
+    document.getElementById('addUserForm').reset();
+}
+
+function handleCreateUser(e) {
+    e.preventDefault();
+
+    const newUser = {
+        id: Date.now(), // In Supabase, this would be a generated 'uuid'
+        full_name: document.getElementById('newFullName').value,
+        email: document.getElementById('newEmail').value,
+        role: document.getElementById('newRole').value,
+        dept: document.getElementById('newDept').value, // Maps to your department_id
+        updated_at: new Date().toISOString(),
+        picture: ""
+    };
+
+    // 1. Add to local state
+    usersDb.unshift(newUser);
+    
+    // 2. Persist to LocalStorage
+    localStorage.setItem('usersData', JSON.stringify(usersDb));
+
+    // 3. UI Updates
+    showToast(`Account created for ${newUser.full_name}`, "success");
+    renderUsers();
+    closeUserModal();
+
+    // NOTE: For Supabase integration, you would use:
+    // await supabase.from('profiles').insert([newUser])
+}
+
+// Close modal when clicking outside the card
+window.onclick = function(event) {
+    const modal = document.getElementById('userModal');
+    if (event.target == modal) {
+        closeUserModal();
+    }
+}
+
+// Add this at the end of your provided dashboard logic
+document.getElementById('logoutBtn')?.addEventListener('click', () => {
+    window.location.href = '/auth/logout';
+});
+
 // Start
 init();
