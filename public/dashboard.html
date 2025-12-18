@@ -25,7 +25,9 @@
                     <p id="profileRole" style="font-size: 0.75rem; color: var(--text-muted);">...</p>
                 </div>
             </div>
-            <a href="/auth/logout" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+            <button id="logoutBtn" class="btn-logout" style="width: 100%; cursor: pointer;">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>
         </div>
     </aside>
 
@@ -125,7 +127,7 @@
                         <h2 style="font-size: 1.1rem; font-weight: 700;">System Reports</h2>
                         <div class="flex gap-2">
                             <!-- UPDATED BUTTONS with new Classes -->
-                            <button onclick="exportToExcel()" class="btn-secondary" style="color: #059669; border-color: #059669; background: #ecfdf5;">
+                            <button onclick="window.exportToExcel()" class="btn-secondary" style="color: #059669; border-color: #059669; background: #ecfdf5;">
                                 <i class="fas fa-file-csv"></i> Export CSV
                             </button>
                             <button onclick="window.print()" class="btn-secondary">
@@ -203,6 +205,9 @@
                         </select>
                     </div>
                 </div>
+                <p style="font-size:0.8rem; color:orange; margin-bottom:10px;">
+                    <i class="fas fa-info-circle"></i> Default password will be set to: <code>password123</code>
+                </p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" onclick="closeUserModal()" class="btn-secondary" style="width: auto;">Cancel</button>
                     <button type="submit" class="btn-primary" style="width: auto;">Create User Profile</button>
@@ -210,6 +215,6 @@
             </form>
         </div>
     </div>
-    <script src="./js/modules/dashboard/dashboard.js"></script>
+    <script type="module" src="./js/dashboard.js"></script>
 </body>
 </html>

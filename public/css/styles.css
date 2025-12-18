@@ -223,3 +223,55 @@ tr:hover { background: #f9fafb; }
 .logo-circle { width: 56px; height: 56px; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 1.5rem; }
 .section-content { display: none; }
 .section-content.active { display: block; animation: slideUp 0.4s ease-out; }
+
+@media print {
+    /* Hide Sidebars, Buttons, and extra Inputs */
+    .sidebar, 
+    .btn-primary, 
+    .btn-secondary, 
+    .top-header .badge,
+    #toast-container,
+    button {
+        display: none !important;
+    }
+
+    /* Reset Layout for Paper */
+    body, .dashboard-layout, .main-content {
+        background: white;
+        height: auto;
+        overflow: visible;
+        display: block;
+    }
+
+    .main-content {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Expand Content */
+    .card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    /* Table Styling for Print */
+    table {
+        width: 100%;
+        border: 1px solid #000;
+    }
+    th, td {
+        border: 1px solid #000;
+        color: black;
+    }
+    
+    /* Add a Print Header */
+    .content-scroll::before {
+        content: "A-SYNC System Report - Generated on " attr(data-date);
+        display: block;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}
