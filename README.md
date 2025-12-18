@@ -1,5 +1,7 @@
 # A-Sync Login Webpage with Google Auth
 
-# FOR IT TO WORK DO :
+# FOR IT TO WORK DO:
 
-# "node server.js"
+# copy the .env files in the GC
+# npm install
+# node server

@@ -1,5 +1,6 @@
 // public/js/login.js
 import { supabase } from './config/supabaseClient.js';
+import { showToast } from './utils/uiHelpers.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -21,6 +22,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (error) {
                 showErrorToast(error.message);
+            }
+        });
+    }
+
+    // --- 2. HANDLE FORGOT PASSWORD ---
+    const forgotBtn = document.getElementById('forgotPasswordBtn');
+    if (forgotBtn) {
+        forgotBtn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            // 1. Get email from the input field
+            const emailInput = document.querySelector('input[name="email"]');
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showToast("Please enter your email address in the field above first.");
+                emailInput.focus();
+                return;
+            }
+
+            // 2. Send Reset Email
+            const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+                // Redirect them to a special page to type new password
+                redirectTo: `${window.location.origin}/update-password.html`,
+            });
+
+            if (error) {
+                showErrorToast("Error: " + error.message);
+            } else {
+                showToast(`Password reset link sent to ${email}. Check your inbox (and spam folder).`);
             }
         });
     }
@@ -65,5 +96,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Helper for Login Page Toasts (Simple version)
 function showErrorToast(msg) {
-    alert(msg); // You can replace this with your nice toast UI if you import uiHelpers.js
+    showToast(msg); // You can replace this with your nice toast UI if you import uiHelpers.js
 }
