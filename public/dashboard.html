@@ -98,7 +98,7 @@
                 <div class="card" style="padding: 0; overflow: hidden; border: none; background: transparent; box-shadow: none;">
                     <div class="table-container">
                         <table>
-                            <thead><tr><th>Date & Time</th><th>Mode & Proof</th><th>Remarks & Feedback</th><th class="text-center">Status</th></tr></thead>
+                            <thead><tr><th>Date & Time</th><th>Mode & Proof</th><th>Reason for Rejection</th><th class="text-center">Status</th></tr></thead>
                             <tbody id="historyTableBody"></tbody>
                         </table>
                     </div>
@@ -205,8 +205,8 @@
                         </select>
                     </div>
                 </div>
-                <p style="font-size:0.8rem; color:orange; margin-bottom:10px;">
-                    <i class="fas fa-info-circle"></i> Default password will be set to: <code>password123</code>
+                <p style="font-size:0.8rem; color:var(--primary); margin-bottom:10px;">
+                    <i class="fas fa-paper-plane"></i> The user will receive an email invitation to set their password.
                 </p>
                 <div style="margin-top: 1.5rem; display: flex; gap: 10px; justify-content: flex-end;">
                     <button type="button" onclick="closeUserModal()" class="btn-secondary" style="width: auto;">Cancel</button>

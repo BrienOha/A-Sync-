@@ -232,7 +232,7 @@ tr:hover { background: #f9fafb; }
     .top-header .badge,
     #toast-container,
     button {
-        display: none !important;
+        display: none;
     }
 
     /* Reset Layout for Paper */
@@ -267,7 +267,7 @@ tr:hover { background: #f9fafb; }
     
     /* Add a Print Header */
     .content-scroll::before {
-        content: "A-SYNC System Report - Generated on " attr(data-date);
+        content: "A-SYNC System Report";
         display: block;
         font-size: 1.5rem;
         font-weight: bold;
@@ -275,3 +275,23 @@ tr:hover { background: #f9fafb; }
         text-align: center;
     }
 }
+
+.btn-approve {
+    display: block; text-align: center; width: 100%; padding: 0.75rem; width: 50px;
+    border: 1px solid #e2feeb; background: var(--success-bg); border-radius: 0.5rem;
+    color: var(--success); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: var(--transition);
+}
+
+.btn-reject {
+    display: block; text-align: center; width: 100%; padding: 0.75rem; width: 50px; width: 50px;
+    border: 1px solid #e2feeb; background: var(--danger-bg); border-radius: 0.5rem;
+    color: var(--danger); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: var(--transition);
+}
+
+.btn-delete {
+    display: block; text-align: center; width: 100%; padding: 0.75rem; width: 50px; width: 50px;
+    border: 1px solid #e2feeb; background: var(--danger-bg); border-radius: 0.5rem;
+    color: var(--danger); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: var(--transition);
+}
+
+.btn-delete:hover { background: #fee2e2; box-shadow: 0 2px 4px rgba(220, 38, 38, 0.1); cursor: pointer; }

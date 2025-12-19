@@ -1,10 +1,10 @@
-// public/js/dashboard.js
-
 // 1. IMPORTS
 import { supabase } from './config/supabaseClient.js';
 import { fetchLogs, submitLogEntry, updateLogStatus } from './services/dtrServices.js';
 import { fetchAllUsers, createSystemUser, deleteSystemUser } from './services/userServices.js';
 import { showToast } from './utils/uiHelpers.js';
+import { logoutUser } from './services/authServices.js';
+import { formatTime } from './utils/formatters.js';
 import { 
     renderStats, renderHistoryTable, renderApprovalTable, 
     renderReportTable, renderUserTable 
@@ -46,7 +46,7 @@ async function init() {
         if (currentUser.role === 'Admin') await loadUserManagement();
         await loadData();
         
-        showSection('home'); 
+        showSection('home');
 
     } catch (err) {
         console.error("Init failed:", err);
@@ -54,13 +54,15 @@ async function init() {
     }
 }
 
-// 4. DATA LOADERS
+// 4. LOAD DATA
 async function loadData() {
     const { data, error } = await fetchLogs(currentUser.role, currentUser.id);
     if (error) return showToast(error.message, "error");
 
     window.dbData = data; 
     renderStats(data, currentUser.role, window.systemUsers);
+    const currentDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    document.getElementById('currentDate').innerText = currentDate;
 
     if (currentUser.role === 'Teacher') {
         renderHistoryTable(data);
@@ -83,7 +85,7 @@ async function loadUserManagement() {
 
 // 5. ACTION HANDLERS (The Buttons)
 
-// -- Submit DTR --
+// -- DTR --
 async function submitDTR(e) {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
@@ -242,6 +244,15 @@ function closeUserModal() {
     document.getElementById('addUserForm').reset();
 }
 window.onclick = function(event) { if (event.target === document.getElementById('userModal')) closeUserModal(); };
+
+document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+    try {
+        await logoutUser();
+        window.location.href = "/login.html";
+    } catch (err) {
+        console.error("Logout failed:", err);
+    }
+});
 
 // 7. WINDOW EXPORTS
 window.submitDTR = submitDTR;

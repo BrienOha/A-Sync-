@@ -15,8 +15,6 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 router.get('/google/callback', 
     passport.authenticate('google', { failureRedirect: '/login.html' }),
     (req, res) => {
-        // Simple redirect for now. 
-        // To fully integrate, you'd want to exchange this for a Supabase Session.
         res.redirect('/dashboard.html?name=' + encodeURIComponent(req.user.displayName));
     }
 );

@@ -71,7 +71,7 @@ export function renderHistoryTable(data) {
                 <b>${row.mode}</b>
                 ${row.proof_url ? `<a href="${row.proof_url}" target="_blank" style="font-size:0.8rem;display:block">View Proof</a>` : ''}
             </td>
-            <td>${row.remarks || '-'}</td>
+            <td>${row.admin_comment || '-'}</td>
             <td class="text-center">${getBadgeHTML(row.status)}</td>
         </tr>
     `).join('');
@@ -113,8 +113,8 @@ export function renderApprovalTable(data) {
             </td>
             <td class="text-center">
                 <div class="flex justify-center gap-2">
-                    <button onclick="window.processDTR('${row.id}', 'Approved')" class="btn-icon btn-approve" title="Approve"><i class="fas fa-check"></i></button>
-                    <button onclick="window.processDTR('${row.id}', 'Rejected')" class="btn-icon btn-reject" title="Reject"><i class="fas fa-times"></i></button>
+                    <button onclick="window.processDTR('${row.id}', 'Approved')" class="btn-approve" title="Approve"><i class="fas fa-check"></i></button>
+                    <button onclick="window.processDTR('${row.id}', 'Rejected')" class="btn-reject" title="Reject"><i class="fas fa-times"></i></button>
                 </div>
             </td>
         </tr>`;
@@ -161,7 +161,7 @@ export function renderUserTable(users) {
             <td>${u.department || '-'}</td>
             <td>${u.role}</td>
             <td class="text-center">
-                <button onclick="window.handleDeleteUser('${u.id}')" class="btn-icon" style="color:red" title="Delete User"><i class="fas fa-trash"></i></button>
+                <button onclick="window.handleDeleteUser('${u.id}')" class="btn-delete" title="Delete User"><i class="fas fa-trash"></i></button>
             </td>
         </tr>
     `).join('');
