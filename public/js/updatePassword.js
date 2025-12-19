@@ -21,7 +21,7 @@ document.getElementById('updatePasswordForm').addEventListener('submit', async (
         btn.disabled = false;
         btn.innerHTML = "Update Password";
     } else {
-        showToast("Password updated successfully! Logging you in...");
+        showToast("Password updated successfully! Please sign in again.");
         window.location.href = "/login.html";
     }
 });
