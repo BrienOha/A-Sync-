@@ -11,17 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
         googleBtn.addEventListener('click', async (e) => {
             e.preventDefault();
             
-            // Trigger Supabase OAuth
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    // Redirects back to your dashboard after Google approves
+                    // This tells Supabase: "After Google is done, send them HERE"
                     redirectTo: `${window.location.origin}/dashboard.html`
                 }
             });
 
             if (error) {
-                showErrorToast(error.message);
+                showToast("Google Login Error: " + error.message);
             }
         });
     }
@@ -56,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 2. HANDLE MANUAL LOGIN ---
+    // --- 3. HANDLE MANUAL LOGIN ---
     const loginForm = document.querySelector('form');
     
     if (loginForm) {
