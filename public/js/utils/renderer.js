@@ -1,4 +1,3 @@
-// public/js/utils/renderers.js
 import { formatTime } from './formatters.js';
 import { getBadgeHTML } from './uiHelpers.js';
 

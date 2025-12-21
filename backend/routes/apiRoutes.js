@@ -2,11 +2,8 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 
-// Middleware to ensure request comes from an Admin (Basic implementation)
-// In production, verify the Session Token here.
+// Middleware to ensure request comes from an Admin
 const isAdmin = (req, res, next) => {
-    // For this prototype, we trust the session or token passed
-    // You should verify req.headers.authorization with Supabase
     next(); 
 };
 

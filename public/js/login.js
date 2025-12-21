@@ -1,4 +1,3 @@
-// Imports
 import { loginUser, loginWithGoogle, sendPasswordReset } from './services/authServices.js';
 import { showToast } from './utils/uiHelpers.js';
 

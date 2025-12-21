@@ -1,6 +1,4 @@
 import { supabase } from '../config/supabaseClient.js';
-
-// READ: Fetch users directly from DB (Allowed by RLS for Admins)
 export async function fetchAllUsers() {
     const { data, error } = await supabase
         .from('profiles')
@@ -11,7 +9,6 @@ export async function fetchAllUsers() {
     return data;
 }
 
-// WRITE: Call our Node Backend to create user
 export async function createSystemUser(userData) {
     const response = await fetch('/api/users', {
         method: 'POST',
@@ -24,7 +21,6 @@ export async function createSystemUser(userData) {
     return result;
 }
 
-// DELETE: Call Node Backend
 export async function deleteSystemUser(userId) {
     const response = await fetch(`/api/users/${userId}`, {
         method: 'DELETE'

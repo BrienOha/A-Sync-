@@ -7,13 +7,10 @@ exports.createUser = async (req, res) => {
     try {
         console.log(`Inviting user: ${email}...`);
 
-        // --- STEP 1: Invite User via Email ---
-        // This sends the official Supabase Invite email.
         const { data: authData, error: authError } = await supabaseAdmin.auth.admin.inviteUserByEmail(
             email, 
             { 
-                data: { full_name: fullName }, // Save name in metadata
-                // CRITICAL: When they click the link, go here to set their password
+                data: { full_name: fullName },
                 redirectTo: 'http://localhost:3000/update-password.html' 
             }
         );
@@ -23,8 +20,6 @@ exports.createUser = async (req, res) => {
         const newUserId = authData.user.id;
         console.log(`Invite sent (ID: ${newUserId}). Creating/Updating profile...`);
 
-        // --- STEP 2: Create/Update the Profile ---
-        // We use upsert so if they were a "Zombie user", this fixes them.
         const { error: profileError } = await supabaseAdmin
             .from('profiles')
             .upsert({
@@ -37,8 +32,6 @@ exports.createUser = async (req, res) => {
             });
 
         if (profileError) {
-            // If profile fails, we don't delete the user because they might have just been invited.
-            // But we do report the error.
             throw new Error(`Profile Error: ${profileError.message}`);
         }
 
@@ -51,7 +44,6 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// ... deleteUser remains the same ...
 exports.deleteUser = async (req, res) => {
     const { id } = req.params;
     try {
