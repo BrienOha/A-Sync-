@@ -4,7 +4,6 @@ import { fetchLogs, submitLogEntry, updateLogStatus } from './services/dtrServic
 import { fetchAllUsers, createSystemUser, deleteSystemUser } from './services/userServices.js';
 import { showToast } from './utils/uiHelpers.js';
 import { logoutUser } from './services/authServices.js';
-import { formatTime } from './utils/formatters.js';
 import { 
     renderStats, renderHistoryTable, renderApprovalTable, 
     renderReportTable, renderUserTable 

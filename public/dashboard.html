@@ -108,8 +108,8 @@
             <!-- 4. APPROVALS -->
             <div id="approval" class="section-content">
                 <div class="card" style="padding: 0; overflow: hidden; border: none; background: transparent; box-shadow: none;">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 style="font-size: 1.1rem; font-weight: 700;">Pending Approvals</h2>
+                    <div class="section-header">
+                        <h2>Pending Approvals</h2>
                     </div>
                     <div class="table-container">
                         <table>
@@ -123,8 +123,8 @@
             <!-- 5. REPORTS -->
             <div id="reports" class="section-content">
                 <div class="card" style="padding: 0; overflow: hidden; border: none; background: transparent; box-shadow: none;">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 style="font-size: 1.1rem; font-weight: 700;">System Reports</h2>
+                    <div class="section-header" style="padding: 1rem;">
+                        <h2>System Reports</h2>
                         <div class="flex gap-2">
                             <!-- UPDATED BUTTONS with new Classes -->
                             <button onclick="window.exportToExcel()" class="btn-secondary" style="color: #059669; border-color: #059669; background: #ecfdf5;">
@@ -147,9 +147,10 @@
             <!-- 6. USERS -->
             <div id="users" class="section-content">
                 <div class="card" style="padding: 0; overflow: hidden; border: none; background: transparent; box-shadow: none;">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 style="font-size: 1.1rem; font-weight: 700;">User Access Control</h2>
-                        <button onclick="addUserPrompt()" class="btn-primary" style="width: auto; padding: 8px 16px;">
+                    <!-- UPDATED HEADER STRUCTURE -->
+                    <div class="section-header">
+                        <h2>User Access Control</h2>
+                        <button onclick="window.addUserPrompt()" class="btn-primary" style="width: auto;">
                             <i class="fas fa-user-plus"></i> Add User
                         </button>
                     </div>
@@ -170,49 +171,65 @@
             </div>
         </div>
     </div>
-    <div id="userModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content card" style="max-width: 500px;">
-            <div class="flex justify-between items-center mb-4">
-                <h2 style="font-size: 1.25rem; font-weight: 700;">Add New User</h2>
-                <button onclick="closeUserModal()" class="btn-icon"><i class="fas fa-times"></i></button>
+    <!-- UPDATED MODAL STRUCTURE -->
+    <div id="userModal" class="modal-overlay">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <h2>Add New User</h2>
+                <button onclick="window.closeUserModal()" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
             
-            <form id="addUserForm" onsubmit="handleCreateUser(event)">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="newFullName" placeholder="e.g. John Doe" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="newEmail" placeholder="user@school.edu" required>
-                </div>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <!-- Body -->
+            <div class="modal-body">
+                <form id="addUserForm" onsubmit="window.handleCreateUser(event)">
                     <div class="form-group">
-                        <label>System Role</label>
-                        <select id="newRole">
-                            <option value="Teacher">Teacher</option>
-                            <option value="Head">Department Head</option>
-                            <option value="Admin">Administrator</option>
-                        </select>
+                        <label>Full Name</label>
+                        <input type="text" id="newFullName" placeholder="e.g. John Doe" required>
                     </div>
                     <div class="form-group">
-                        <label>Department</label>
-                        <select id="newDept">
-                            <option value="Science">Science</option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="English">English</option>
-                            <option value="IT Office">IT Office</option>
-                        </select>
+                        <label>Email Address</label>
+                        <input type="email" id="newEmail" placeholder="user@school.edu" required>
                     </div>
-                </div>
-                <p style="font-size:0.8rem; color:var(--primary); margin-bottom:10px;">
-                    <i class="fas fa-paper-plane"></i> The user will receive an email invitation to set their password.
-                </p>
-                <div style="margin-top: 1.5rem; display: flex; gap: 10px; justify-content: flex-end;">
-                    <button type="button" onclick="closeUserModal()" class="btn-secondary" style="width: auto;">Cancel</button>
-                    <button type="submit" class="btn-primary" style="width: auto;">Create User Profile</button>
-                </div>
-            </form>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>System Role</label>
+                            <select id="newRole">
+                                <option value="Teacher">Teacher</option>
+                                <option value="Head">Department Head</option>
+                                <option value="Admin">Administrator</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Department</label>
+                            <select id="newDept">
+                                <option value="Science">Science</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="English">English</option>
+                                <option value="Literature">Literature</option>
+                                <option value="Filipino">Filipino</option>
+                                <option value="Social Studies">Social Studies</option>
+                                <option value="Values">Values Education</option>
+                                <option value="Physical Education">Physical Education</option>
+                                <option value="History">History</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <p style="font-size:0.85rem; color:var(--primary); background:var(--primary-light); padding:10px; border-radius:6px; margin-top:10px;">
+                        <i class="fas fa-paper-plane"></i> User will receive an email invitation to set their password.
+                    </p>
+
+                    <!-- Footer -->
+                    <div class="modal-footer">
+                        <button type="button" onclick="window.closeUserModal()" class="btn-cancel">Cancel</button>
+                        <button type="submit" class="btn-primary" style="width: auto;">Create User</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <script type="module" src="./js/dashboard.js"></script>
